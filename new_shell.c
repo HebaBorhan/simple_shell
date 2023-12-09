@@ -10,8 +10,8 @@ int main(int argc, char *argv[])
 	extern char **environ;
 	size_t n = 1;
 	int len = 0;
-	char *lineremaoved = NULL;
-	char *buffer = NULL;
+	char *lineremoved = NULL;
+	char *command = NULL;
 	char *delim = " ";
 	char *token = NULL;
 	char **toks = NULL;
@@ -21,22 +21,30 @@ int main(int argc, char *argv[])
 	int i = 0;
 	if (isatty(STDIN_FILENO))
 	{
-
 		while (1)
 		{
-			printf("$ ");
-			getline(&buffer, &n, stdin);
+			write(1, "$ ", 2);
+			ssize_t user_input = getline(&command, &n, stdin);
+
+			// Check for end of file (Ctrl+D)
+			if (user_input == -1)
+			{
+				printf("\n");
+				break; // Exit the loop on EOF
+			}
 			/**
-			 * remove the \n from buffer
+			 * remove the \n from command
 			 * then split tokens
 			 */
-			len = strlen(buffer);
-			lineremaoved = malloc(sizeof(char) * len + 1);
-			strncpy(lineremaoved, buffer, len - 1);
+			len = strlen(command);
+			lineremoved = malloc(sizeof(char) * len + 1);
+			strncpy(lineremoved, command, len - 1);
+			
 			toks = malloc(sizeof(char *) * 1024);
 			if (toks == NULL)
 				return (-1);
-			token = strtok(lineremaoved, delim);
+			
+			token = strtok(lineremoved, delim);
 			i = 0;
 			while (token)
 			{
@@ -56,7 +64,6 @@ int main(int argc, char *argv[])
 			}
 			if (pid == 0)
 			{
-				printf("Before execve\n");
 				if (execve(toks[0], toks, environ) == -1)
 				{
 					perror(argv[0]);
@@ -67,37 +74,16 @@ int main(int argc, char *argv[])
 			else
 			{
 				// Parent process
-				do
-				{
-					pid_t w = waitpid(pid, &status, WUNTRACED);
-					if (w == -1)
-					{
-						perror("waitpid");
-						exit(EXIT_FAILURE);
-					}
-					if (WIFEXITED(status))
-					{
-						printf("Child has exited with status %d.\n", WEXITSTATUS(status));
-					}
-					else if (WIFSIGNALED(status))
-					{
-						printf("Child has been killed by signal %d.\n", WTERMSIG(status));
-					}
-					else if (WIFSTOPPED(status))
-					{
-						printf("Child has been stopped by signal %d.\n", WSTOPSIG(status));
-					}
-				} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+				wait(&status);
 			}
-
-			free(buffer);
 		}
 		printf("HERE");
 	}
 	else
 	{
-		getline(&buffer, &n, stdin);
-		printf("%s", buffer);
+		getline(&command, &n, stdin);
+		printf("%s", command);
 	}
+	free(command);
 	return (0);
 }
