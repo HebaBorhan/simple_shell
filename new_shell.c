@@ -1,3 +1,4 @@
+#include "new_shell.h" 
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,12 +35,12 @@ int main(int argc, char *argv[])
 			}
 			/**
 			 * remove the \n from command
-			 * then split tokens
 			 */
-			len = strlen(command);
-			lineremoved = malloc(sizeof(char) * len + 1);
-			strncpy(lineremoved, command, len - 1);
+			remove_line(command, &lineremoved);
 			
+			/**
+			 * split tokens
+			 */
 			toks = malloc(sizeof(char *) * 1024);
 			if (toks == NULL)
 				return (-1);
@@ -85,5 +86,6 @@ int main(int argc, char *argv[])
 		printf("%s", command);
 	}
 	free(command);
+	free(lineremoved);
 	return (0);
 }
