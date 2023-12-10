@@ -11,5 +11,6 @@
 int _strlen(const char *string);
 void remove_line(char *command, char **lineremoved);
 char *_strncpy(char *dest, const char *src, int n);
+char *input(char *cmd, size_t n, ssize_t user_input);
 
 #endif
