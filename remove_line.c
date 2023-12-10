@@ -10,7 +10,7 @@ char *remove_line(char *command, char **lineremoved)
     
     *lineremoved = malloc(sizeof(char) * (len + 1));
     
-    *_strncpy(*lineremoved, command, len - 1);
+    _strncpy(*lineremoved, command, len - 1);
 
 return (*lineremoved);
 }
