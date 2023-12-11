@@ -38,6 +38,12 @@ int main(int argc, char *argv[])
 			if (user_input == -1)
 			{
 				printf("\n");
+				if (command != NULL)
+				{
+					free(command);
+					command = NULL;
+				}
+				close(STDOUT_FILENO);
 				break; // Exit the loop on EOF
 			}
 			/**
@@ -92,7 +98,11 @@ int main(int argc, char *argv[])
 		getline(&command, &n, stdin);
 		printf("%s", command);
 	}
-	free(command);
+	if (command != NULL)
+	{
+		free(command);
+		command = NULL;
+	}
 	free(lineremoved);
 	return (0);
 }
