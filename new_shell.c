@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
 			{
 				if (execve(toks[0], toks, environ) == -1)
 				{
-					perror(argv[0]);
+					perror(argv[0], toks[0]);
 				}
 				printf("After execve\n");
 			}
