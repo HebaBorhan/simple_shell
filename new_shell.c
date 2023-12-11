@@ -16,7 +16,7 @@
 int main(int argc, char *argv[])
 {
 	extern char **environ;
-	size_t n = 0;
+	size_t n = 1;
 	int len = 0;
 	char *lineremoved = NULL;
 	char *command = NULL;
