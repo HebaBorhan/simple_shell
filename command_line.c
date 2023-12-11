@@ -35,8 +35,14 @@ _strncpy(cmd_cpy, cmd, len - 1);
                 token = strtok(NULL, delim);
                 i++;
             }
-            args = malloc(sizeof(char) * i);
+            args = malloc(sizeof(char) * (i + 1));
             token = strtok(cmd_cpy, delim);
+	    if (args == NULL)
+	    {
+		    perror("Error");
+		    return (NULL);
+	    }
+	    token = strtok(cmd_cpy, delim);
             i = 0;
             while(token)
             {
