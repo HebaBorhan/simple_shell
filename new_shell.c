@@ -1,17 +1,11 @@
-#include "new_shell.h" 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <string.h>
+#include "new_shell.h"
 
 /**
  * main - program to run a simple shell
  * @argc: arguments number
  * @argv: null terminated array of arguments
  * Return: 0 (Success)
-*/
+ */
 
 int main(int argc, char *argv[])
 {
@@ -25,6 +19,10 @@ int main(int argc, char *argv[])
 	char **toks = NULL;
 	pid_t pid;
 	int status;
+	
+	/**
+	 * char *cmd_path = NULL;
+	 */
 
 	int i = 0;
 	if (isatty(STDIN_FILENO))
@@ -50,46 +48,77 @@ int main(int argc, char *argv[])
 			 * remove the \n from command
 			 */
 			remove_line(command, &lineremoved);
-			
+
 			/**
 			 * split tokens
 			 */
 			toks = malloc(sizeof(char *) * 1024);
 			if (toks == NULL)
 				return (-1);
-			
+
 			token = strtok(lineremoved, delim);
 			i = 0;
 			while (token)
 			{
 				toks[i] = strdup(token);
+
+				if (toks[i] == NULL)
+				{
+					// Handle allocation failure
+					for (int j = 0; j < i; j++)
+					{
+						free(toks[j]);
+					}
+					free(toks);
+					return (-1);
+				}
+
 				token = strtok(NULL, delim);
 				i++;
 			}
+
+			toks[i] = NULL;
+
 			/**
 			 * handle path
 			 * and search for the command in path before fork
-			 */
-			pid = fork();
-			if (pid == -1)
-			{
-				printf("Error in fork system call.\n");
-				exit(1);
-			}
-			if (pid == 0)
-			{
-				if (execve(toks[0], toks, environ) == -1)
-				{
-					perror(argv[0]);
-				}
-				printf("After execve\n");
-			}
+			 *cmd_path = search_path(toks);
+			 *if (cmd_path != NULL){
+			 *correct test
+				printf("Command path: %s\n", cmd_path);
+				*/
 
+				pid = fork();
+				if (pid == -1)
+				{
+					printf("Error in fork system call.\n");
+					exit(1);
+				}
+				if (pid == 0)
+				{
+
+					printf("Freed memory\n");
+
+					if (execve(toks[0], toks, environ) == -1)
+					{
+						perror(argv[0]);
+					}
+					printf("After execve\n");
+					free(toks);
+					exit(1); // Exit the child process
+				}
+				else
+				{
+					// Parent process
+					wait(&status);
+				}
+				free(toks); // Free command path
+			/**
 			else
 			{
-				// Parent process
-				wait(&status);
+				printf("Error HERE");
 			}
+			*/
 		}
 		printf("HERE");
 	}
@@ -98,11 +127,14 @@ int main(int argc, char *argv[])
 		getline(&command, &n, stdin);
 		printf("%s", command);
 	}
+
 	if (command != NULL)
 	{
 		free(command);
 		command = NULL;
 	}
-	free(lineremoved);
+	free(lineremoved);	
+	free(toks);
+
 	return (0);
 }
