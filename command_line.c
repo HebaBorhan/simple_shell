@@ -45,25 +45,27 @@ char **tokenization(char *cmd)
     const char *delim = " \t\n";
     char **args = NULL;
     int i = 1, j =0;
+
     
     if (cmd == NULL)
         return (NULL);
     
     cmdcpy = _strdup(cmd);
-    token = strtok(cmd, delim);
-    while (token)
+    token = strtok(cmdcpy, delim);
+    while(token)
     {
         i++;
         token = strtok(NULL, delim);
     }
     args = malloc(sizeof(char *) * (i + 1));
+
     if (args == NULL)
     {
         free(cmd);
         return (NULL);
     }
-    token = strtok(cmdcpy, delim);
-     
+    token = strtok(cmd, delim);
+        
     while (token)
     {
         args[j] = _strdup(token); 

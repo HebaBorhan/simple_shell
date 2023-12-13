@@ -60,3 +60,34 @@ i++;
 free(arg);
 arg = NULL;
 }
+/**
+ * _strspn - calculates length of initial segment of s which
+ * consists entirely of bytes from accept.
+ *@s: string to be checked
+
+ *@accept: The string containing characters to match
+ * Return: Length of the initial segment
+int _strspn(const char *s, const char *accept)
+{
+	int count = 0;
+	int found;
+	const char *a;
+	while (*s)
+	{
+		found = 0;
+		for (a = accept; *a; a++)
+		{
+			if (*s == *a)
+			{
+				count++;
+				found = 1;
+				break;
+			}
+		}
+		if (!found)
+			return count;
+		s++;
+	}
+	return count;
+}
+*/
