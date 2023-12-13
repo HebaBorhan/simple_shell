@@ -62,11 +62,13 @@ char **tokenization(char *cmd)
     if (args == NULL)
     {
         free(cmd);
+        free(cmdcpy);
         return (NULL);
     }
     token = strtok(cmdcpy, delim);
     if (token == NULL)
     {
+        free(cmd);
         free(cmdcpy);
         return (NULL);
     }
