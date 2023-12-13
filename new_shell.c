@@ -11,28 +11,31 @@ int main(int argc, char *argv[])
 {
 	extern char **environ;
 	size_t n = 1;
-	int len = 0;
 	char *lineremoved = NULL;
 	char *command = NULL;
 	char *delim = " ";
 	char *token = NULL;
 	char **toks = NULL;
 	pid_t pid;
-	int status;
+	int i, status, j;
+	ssize_t user_input;
+	(void) argc;
 	
 	/**
 	 * char *cmd_path = NULL;
 	 */
 
-	int i = 0;
+	i = 0;
 	if (isatty(STDIN_FILENO))
 	{
 		while (1)
 		{
 			write(1, "$ ", 2);
-			ssize_t user_input = getline(&command, &n, stdin);
+			user_input = getline(&command, &n, stdin);
 
-			// Check for end of file (Ctrl+D)
+			/**
+			 * Check for end of file (Ctrl+D)
+			 */
 			if (user_input == -1)
 			{
 				printf("\n");
@@ -42,7 +45,7 @@ int main(int argc, char *argv[])
 					command = NULL;
 				}
 				close(STDOUT_FILENO);
-				break; // Exit the loop on EOF
+				break;
 			}
 			/**
 			 * remove the \n from command
@@ -64,8 +67,10 @@ int main(int argc, char *argv[])
 
 				if (toks[i] == NULL)
 				{
-					// Handle allocation failure
-					for (int j = 0; j < i; j++)
+					/**
+					 * Handle allocation failure
+					 */
+					for (j = 0; j < i; j++)
 					{
 						free(toks[j]);
 					}
@@ -105,14 +110,16 @@ int main(int argc, char *argv[])
 					}
 					printf("After execve\n");
 					free(toks);
-					exit(1); // Exit the child process
+					exit(1);
 				}
 				else
 				{
-					// Parent process
+					/**
+					 * Parent process
+					 */
 					wait(&status);
 				}
-				free(toks); // Free command path
+				free(toks);
 			/**
 			else
 			{
