@@ -76,7 +76,7 @@ void freemalloc2d(char **arg)
 /**
  * _strspn - calculates length of initial segment of s which
  * consists entirely of bytes from accept.
- *@s: The string to be checked
+ *@s: string to be checked
  *@accept: The string containing characters to match
  * Return: Length of the initial segment
  */
