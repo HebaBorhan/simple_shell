@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 	size_t n = 1;
 	char *lineremoved = NULL;
 	char *command = NULL;
-	char *delim = " ";
+	char *delim = " \t\n";
 	char *token = NULL;
 	char **toks = NULL;
 	pid_t pid;
@@ -103,23 +103,23 @@ int main(int argc, char *argv[])
 				}
 				if (pid == 0)
 				{
-
-					printf("Freed memory\n");
-
 					if (execve(toks[0], toks, environ) == -1)
 					{
 						perror(argv[0]);
 					}
-					printf("After execve\n");
 					free(toks);
-					exit(1);
+					exit(127);
 				}
 				else
 				{
 					/**
 					 * Parent process
 					 */
-					wait(&status);
+					waitpid(pid, &status, 0);
+					if (WIFEXITED(status))
+					{
+						status = WEXITSTATUS(status);
+					}
 				}
 				free(toks);
 			/**
