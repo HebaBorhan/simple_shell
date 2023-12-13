@@ -46,16 +46,11 @@ char **tokenizer(char *cmd)
     char **args = NULL;
     int i = 1, j =0;
 
+    cmdcpy = _strdup(cmd);
     if (cmd == NULL || _strspn(cmd, delim) == _strlen(cmd))
     {
 	    return (NULL);
     }
-    cmdcpy = _strdup(cmd);
-    if (cmd == NULL)
-    {
-        return (NULL);
-    }
-
     token = strtok(cmdcpy, delim);
     while (token != NULL)
     {
