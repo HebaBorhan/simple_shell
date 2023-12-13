@@ -51,7 +51,7 @@ char **tokenization(char *cmd)
         return (NULL);
     
     cmdcpy = _strdup(cmd);
-    token = strtok(cmdcpy, delim);
+    token = strtok(cmd, delim);
     while(token)
     {
         i++;
@@ -64,7 +64,12 @@ char **tokenization(char *cmd)
         free(cmd);
         return (NULL);
     }
-    token = strtok(cmd, delim);
+    token = strtok(cmdcpy, delim);
+    if (token == NULL)
+    {
+        free(cmdcpy);
+        return (NULL);
+    }
         
     while (token)
     {
@@ -89,14 +94,16 @@ int execution(char **args, char **argv)
     pid_t pid;
     int status = 0;
 
-    if (access(*args, X_OK) == 0)
+    /*if (access(argv[0], X_OK) == -1)
     {
+            return(status);
+    }*/
          pid = fork();
-         if (pid == -1) 
+         /*if (pid == -1) 
          {
             perror("fork");
             return(-1);
-         }
+         }*/
         if (pid == 0) 
         {
             if (execve(args[0], args, environ) == -1)
@@ -112,7 +119,5 @@ int execution(char **args, char **argv)
             waitpid(pid, &status, 0); 
             freemalloc2d(args);
         }
-    }
-
     return (WEXITSTATUS(status));
 }

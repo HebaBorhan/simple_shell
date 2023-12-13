@@ -31,9 +31,10 @@ int stat = 0;
         toks = tokenization(cmd);
         if (!toks)
             continue;
-    
+            
         stat = execution(toks, argv);
          /*if (stat == -1)
             continue;*/
     }
 }
+
