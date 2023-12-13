@@ -89,14 +89,14 @@ int execution(char **args, char **argv)
     pid_t pid;
     int status = 0;
 
-    /*if (access(args, X_OK) == 0)*/
-    
+    if (access(*args, X_OK) == 0)
+    {
          pid = fork();
-         /*if (pid == -1) 
+         if (pid == -1) 
          {
             perror("fork");
             return(-1);
-         }*/
+         }
         if (pid == 0) 
         {
             if (execve(args[0], args, environ) == -1)
@@ -106,13 +106,13 @@ int execution(char **args, char **argv)
                     exit(1);
 				}
             }
-                     
+               
         else 
         {            
             waitpid(pid, &status, 0); 
             freemalloc2d(args);
         }
-    
+    }
 
     return (WEXITSTATUS(status));
 }
