@@ -35,48 +35,44 @@ return(cmd);
 }
 
 /**
- * **tokenizer - function that parse and tokenize the command
+ * **tokenization - function that parse and tokenize the command
  * @cmd: command to be parsed and tokinize
  * Return: void
 */
-char **tokenizer(char *cmd)
+char **tokenization(char *cmd)
 {
     char *cmdcpy = NULL, *token = NULL;
     const char *delim = " \t\n";
     char **args = NULL;
     int i = 1, j =0;
-    cmdcpy = _strdup(cmd);
-    if (cmd == NULL)
-    {
-        return (NULL);
-    }
-
     
-    token = strtok(cmdcpy, delim);
-    while (token != NULL)
+    if (cmd == NULL)
+        return (NULL);
+    
+    cmdcpy = _strdup(cmd);
+    token = strtok(cmd, delim);
+    while (token)
     {
         i++;
         token = strtok(NULL, delim);
     }
-    free(cmdcpy);
-    args = malloc((i + 1) * sizeof(char *));
+    args = malloc(sizeof(char *) * (i + 1));
     if (args == NULL)
     {
-        free(cmdcpy);
+        free(cmd);
         return (NULL);
     }
-    token = strtok(cmd, delim);
+    token = strtok(cmdcpy, delim);
      
-    while (token != NULL)
+    while (token)
     {
         args[j] = _strdup(token); 
         token = strtok(NULL, delim);
         j++;
     }
-    free(cmd);
     args[j] = NULL;
-    
-    
+    free(cmdcpy);
+    free(cmd);
    return (args);
 }
 
