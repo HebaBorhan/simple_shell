@@ -17,7 +17,8 @@ int main(int argc, char *argv[])
 	char *token = NULL;
 	char **toks = NULL;
 	pid_t pid;
-	int i, status, j;
+	int i, j;
+	int status = 0;
 	ssize_t user_input;
 	(void) argc;
 	
@@ -38,13 +39,14 @@ int main(int argc, char *argv[])
 			 */
 			if (user_input == -1)
 			{
-				printf("\n");
+				write(1, "\n", 1);
 				if (command != NULL)
 				{
 					free(command);
 					command = NULL;
 				}
 				close(STDOUT_FILENO);
+				return(status);
 				break;
 			}
 			/**
