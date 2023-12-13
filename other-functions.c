@@ -72,14 +72,13 @@ void freemalloc2d(char **arg)
     free(arg);
     arg = NULL;
 }
-
 /**
  * _strspn - calculates length of initial segment of s which
  * consists entirely of bytes from accept.
  *@s: string to be checked
+
  *@accept: The string containing characters to match
  * Return: Length of the initial segment
- */
 int _strspn(const char *s, const char *accept)
 {
 	int count = 0;
@@ -103,3 +102,4 @@ int _strspn(const char *s, const char *accept)
 	}
 	return count;
 }
+*/

@@ -46,8 +46,15 @@ char **tokenizer(char *cmd)
     char **args = NULL;
     int i = 1, j =0;
 
+    /**
+     * if (cmd == NULL || strlen(cmd) == 0)
+    {
+	    return (NULL);
+    }
+    */
+    
     cmdcpy = _strdup(cmd);
-    if (cmd == NULL || _strspn(cmd, delim) == _strlen(cmd))
+    if (cmd == NULL)
     {
 	    return (NULL);
     }
@@ -65,8 +72,7 @@ char **tokenizer(char *cmd)
         free(cmdcpy);
         return (NULL);
     }
-    token = strtok(cmd, delim);
-     
+    token = strtok(cmd, delim);     
     while (token != NULL)
     {
         args[j] = _strdup(token); 
@@ -75,8 +81,7 @@ char **tokenizer(char *cmd)
     }
     free(cmd);
     args[j] = NULL;
-    
-    
+
    return (args);
 }
 
