@@ -17,7 +17,7 @@ char **tokenization(char *cmd)
 	char *cmdcpy = NULL, *token = NULL;
 	const char *delim = " \t\n";
 	char **args = NULL;
-	int i = 1, j;
+	int i = 1, j = 0;
 	if (cmd == NULL)
 	{
 		free(cmd);
