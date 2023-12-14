@@ -26,14 +26,15 @@ int stat = 0;
         {
             if (isatty(STDIN_FILENO)) 
                 write(STDOUT_FILENO, "\n",1);
-            return (stat);
+            return(stat);
         }
-        toks = tokenizer(cmd);
-        if (toks == NULL)
+        toks = tokenization(cmd);
+        if (!toks)
             continue;
-    
+            
         stat = execution(toks, argv);
          /*if (stat == -1)
             continue;*/
     }
 }
+

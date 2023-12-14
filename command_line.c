@@ -35,53 +35,54 @@ return(cmd);
 }
 
 /**
- * **tokenizer - function that parse and tokenize the command
+ * **tokenization - function that parse and tokenize the command
  * @cmd: command to be parsed and tokinize
  * Return: void
 */
-char **tokenizer(char *cmd)
+char **tokenization(char *cmd)
 {
     char *cmdcpy = NULL, *token = NULL;
     const char *delim = " \t\n";
     char **args = NULL;
     int i = 1, j =0;
 
-    /**
-     * if (cmd == NULL || strlen(cmd) == 0)
-    {
-	    return (NULL);
-    }
-    */
+    
+    if (cmd == NULL)
+        return (NULL);
     
     cmdcpy = _strdup(cmd);
-    if (cmd == NULL)
-    {
-	    return (NULL);
-    }
-    token = strtok(cmdcpy, delim);
-    while (token != NULL)
+    token = strtok(cmd, delim);
+    while(token)
     {
         i++;
         token = strtok(NULL, delim);
     }
-    free(cmdcpy);
+    args = malloc(sizeof(char *) * (i + 1));
 
-    args = malloc((i + 1) * sizeof(char *));
     if (args == NULL)
     {
+        free(cmd);
+        free(cmdcpy);
+        free(args);
+        return (NULL);
+    }
+    token = strtok(cmdcpy, delim);
+    if (token == NULL)
+    {
+        free(cmd);
         free(cmdcpy);
         return (NULL);
     }
-    token = strtok(cmd, delim);     
-    while (token != NULL)
+        
+    while (token)
     {
         args[j] = _strdup(token); 
         token = strtok(NULL, delim);
         j++;
     }
-    free(cmd);
     args[j] = NULL;
-
+    free(cmdcpy);
+    free(cmd);
    return (args);
 }
 
@@ -96,8 +97,10 @@ int execution(char **args, char **argv)
     pid_t pid;
     int status = 0;
 
-    /*if (access(args, X_OK) == 0)*/
-    
+    /*if (access(argv[0], X_OK) == -1)
+    {
+            return(status);
+    }*/
          pid = fork();
          /*if (pid == -1) 
          {
@@ -113,13 +116,11 @@ int execution(char **args, char **argv)
                     exit(1);
 				}
             }
-                     
+               
         else 
         {            
             waitpid(pid, &status, 0); 
             freemalloc2d(args);
         }
-    
-
     return (WEXITSTATUS(status));
 }

@@ -34,24 +34,12 @@ return (dupstr);
 */
 void remove_newline(char *input) 
 {
-    char *newline_ptr = _strchr(input, '\n');
-    if (newline_ptr != NULL) 
-    {
-        *newline_ptr = '\0';
-    }
-}
-
-/**
-* freemalloc - function that free memory allocation
-* @arg: string to be freed
-* Return: void
-*/
-
-/*void freemalloc(char *arg)
+char *newline_ptr = _strchr(input, '\n');
+if (newline_ptr != NULL) 
 {
-    free(arg);
-    arg = NULL;
-}*/
+*newline_ptr = '\0';
+}
+}
 
 /**
 * freemalloc2d - function that free memory allocation
@@ -61,16 +49,16 @@ void remove_newline(char *input)
 
 void freemalloc2d(char **arg)
 {
-    int i = 0;
-    if (arg == NULL)
-        return;
-    while (arg[i] != NULL) {
-        free(arg[i]);
-        arg[i] = NULL;
-        i++;
-    }
-    free(arg);
-    arg = NULL;
+int i = 0;
+if (arg == NULL)
+return;
+while (arg[i] != NULL) {
+free(arg[i]);
+arg[i] = NULL;
+i++;
+}
+free(arg);
+arg = NULL;
 }
 /**
  * _strspn - calculates length of initial segment of s which
@@ -103,3 +91,4 @@ int _strspn(const char *s, const char *accept)
 	return count;
 }
 */
+
