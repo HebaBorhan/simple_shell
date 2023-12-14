@@ -49,7 +49,6 @@ char **tokenization(char *cmd)
     
     if (cmd == NULL)
     {
-        free(cmd);
         return (NULL);
     }
     
