@@ -108,7 +108,6 @@ int execution(char **args, char **argv)
     }*/
     if (args[0] != NULL && _strcmp(args[0], "env") == 0)
     {
-        int i = 0;
 	while (*environ)
 	{
 		*environ = NULL;
