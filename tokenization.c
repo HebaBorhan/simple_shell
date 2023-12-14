@@ -17,7 +17,7 @@ char **tokenization(char *cmd)
 	char *cmdcpy = NULL, *token = NULL;
 	const char *delim = " \t\n";
 	char **args = NULL;
-	int i, j;
+	int i = 1, j;
 
 	if (cmd == NULL)
 	{
@@ -26,7 +26,7 @@ char **tokenization(char *cmd)
 	}
 	cmdcpy = _strdup(cmd);
 	token = strtok(cmd, delim);
-	for (i = 1; token != NULL; i++)
+	for (; token != NULL; ++i)
 		token = strtok(NULL, delim);
 	free(cmd);
 	cmd = NULL;
