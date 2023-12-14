@@ -18,7 +18,6 @@ char **tokenization(char *cmd)
 	const char *delim = " \t\n";
 	char **args = NULL;
 	int i = 1, j;
-
 	if (cmd == NULL)
 	{
 		free(cmd);
@@ -26,8 +25,11 @@ char **tokenization(char *cmd)
 	}
 	cmdcpy = _strdup(cmd);
 	token = strtok(cmd, delim);
-	for (; token != NULL; ++i)
-		token = strtok(NULL, delim);
+	while(token)
+    {
+        i++;
+        token = strtok(NULL, delim);
+    }
 	free(cmd);
 	cmd = NULL;
 	args = malloc(sizeof(char *) * (i + 1));
