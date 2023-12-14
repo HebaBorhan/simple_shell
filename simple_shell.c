@@ -36,10 +36,7 @@ while (1)
 		continue;
 
 	stat = execution(toks, argv);
-
-	/**
-	 * if (stat == -1)
-	 * continue;
-	 */
+	 if (stat == 127)
+     return (0);
 }
 }

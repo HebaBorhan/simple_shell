@@ -27,16 +27,5 @@ if (input == -1)
 	free(cmd);
 	return (NULL);
 }
-
-    /**
-     * remove_newline(cmd);
-     */
-
-    /**
-     * if (_strcmp(cmd, "exit") == 0)
-     * {
-     * exit(1);
-     * }
-     */
 return (cmd);
 }

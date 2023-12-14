@@ -17,7 +17,7 @@ char **tokenization(char *cmd)
 	char *cmdcpy = NULL, *token = NULL;
 	const char *delim = " \t\n";
 	char **args = NULL;
-	int i = 1, j = 0;
+	int i, j;
 
 	if (cmd == NULL)
 	{
@@ -26,11 +26,8 @@ char **tokenization(char *cmd)
 	}
 	cmdcpy = _strdup(cmd);
 	token = strtok(cmd, delim);
-	while (token)
-	{
-		i++;
+	for (i = 1; token; i++)
 		token = strtok(NULL, delim);
-	}
 	free(cmd);
 	cmd = NULL;
 	args = malloc(sizeof(char *) * (i + 1));
