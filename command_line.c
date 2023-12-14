@@ -106,7 +106,13 @@ int execution(char **args, char **argv)
     }*/
     if (args[0] != NULL && _strcmp(args[0], "env") == 0)
     {
-        print_env();
+        int i = 0;
+	while (environ[i] != NULL)
+	{
+		environ[i] = NULL;
+		i++;
+	}
+	print_env();
         return (0);
     }
          pid = fork();
