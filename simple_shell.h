@@ -24,8 +24,5 @@ char *interpreter();
 char **tokenization(char *cmd);
 int execution(char **args, char **argv);
 void print_env(void);
-/**
- * int _strspn(const char *s, const char *accept);
- */
 
 #endif
