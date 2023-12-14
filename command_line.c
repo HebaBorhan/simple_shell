@@ -84,6 +84,7 @@ char **tokenization(char *cmd)
         j++;
     }
     args[j] = NULL;
+    free(token);
     free(cmdcpy);
     free(cmd);
    return (args);
