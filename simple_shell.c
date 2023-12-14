@@ -34,9 +34,8 @@ while (1)
 	toks = tokenization(cmd);
 	if (!toks)
 		continue;
-
-	stat = execution(toks, argv);
-	if (stat == 127)
-    return (0);
+stat = execution(toks, argv);
+if (stat == 127)
+return (0);
 }
 }
