@@ -26,7 +26,7 @@ char **tokenization(char *cmd)
 	}
 	cmdcpy = _strdup(cmd);
 	token = strtok(cmd, delim);
-	for (i = 1; token; i++)
+	for (i = 1; token != NULL; i++)
 		token = strtok(NULL, delim);
 	free(cmd);
 	cmd = NULL;
