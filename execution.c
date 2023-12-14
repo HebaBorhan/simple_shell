@@ -17,8 +17,8 @@ int execution(char **args, char **argv)
 	pid_t pid;
 	int status = 0;
 
-	if (args == NULL || args[0] == NULL)
-		return (0);
+	/*if (args == NULL || args[0] == NULL)
+		return (0);*/
 	if (_strcmp(args[0], "exit") == 0)
 	{
 		freemalloc2d(args);
