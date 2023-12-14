@@ -49,6 +49,7 @@ char **tokenization(char *cmd)
     
     if (cmd == NULL)
     {
+        free(cmd);
         return (NULL);
     }
     
@@ -59,11 +60,12 @@ char **tokenization(char *cmd)
         i++;
         token = strtok(NULL, delim);
     }
+    free(cmd);
+    cmd = NULL;
     args = malloc(sizeof(char *) * (i + 1));
 
     if (args == NULL)
     {
-        free(cmd);
         free(cmdcpy);
         free(args);
         return (NULL);
@@ -71,8 +73,8 @@ char **tokenization(char *cmd)
     token = strtok(cmdcpy, delim);
     if (token == NULL)
     {
-        free(cmd);
         free(cmdcpy);
+        free(args);
         return (NULL);
     }
         
@@ -82,10 +84,10 @@ char **tokenization(char *cmd)
         token = strtok(NULL, delim);
         j++;
     }
-    args[j] = NULL;
-    free(token);
     free(cmdcpy);
-    free(cmd);
+    cmdcpy = NULL;
+    args[j] = NULL;
+
    return (args);
 }
 
