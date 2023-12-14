@@ -22,6 +22,7 @@ void freemalloc2d(char **arg);
 char *interpreter();
 char **tokenizer(char *cmd);
 int execution(char **args, char **argv);
+void print_env(void);
 /**
  * int _strspn(const char *s, const char *accept);
  */
