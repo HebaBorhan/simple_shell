@@ -35,7 +35,7 @@ while (1)
 	if (!toks)
 		continue;
 stat = execution(toks, argv);
-if (stat == 127)
-return (0);
+/*if (stat == 127)
+return (0);*/
 }
 }
