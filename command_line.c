@@ -104,6 +104,11 @@ int execution(char **args, char **argv)
     {
             return(status);
     }*/
+    if (args[0] != NULL && _strcmp(args[0], "env") == 0)
+    {
+        print_env();
+        return (0);
+    }
          pid = fork();
          /*if (pid == -1) 
          {
