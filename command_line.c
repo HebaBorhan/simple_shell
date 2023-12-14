@@ -106,6 +106,17 @@ int execution(char **args, char **argv)
     {
             return(status);
     }*/
+
+    if (args == NULL || args[0] == NULL) 
+        return 0;
+    
+
+    if (_strcmp(args[0], "exit") == 0) 
+    {
+        freemalloc2d(args);
+        exit(0);
+    }
+
     if (args[0] != NULL && _strcmp(args[0], "env") == 0)
     {
 	/**
@@ -118,19 +129,20 @@ int execution(char **args, char **argv)
 	print_env();
         return (0);
     }
+
          pid = fork();
-         /*if (pid == -1) 
+         if (pid == -1) 
          {
             perror("fork");
             return(-1);
-         }*/
+         }
         if (pid == 0) 
         {
             if (execve(args[0], args, environ) == -1)
 				{
 					perror(argv[0]);
                     freemalloc2d(args);
-                    exit(1);
+                    exit(127);
 				}
             }
                
