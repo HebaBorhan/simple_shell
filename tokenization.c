@@ -25,7 +25,7 @@ return (NULL);
 }
 cmdcpy = _strdup(cmd);
 token = strtok(cmd, delim);
-for (; token; ++i)
+for (; token; i++)
 token = strtok(NULL, delim);
 free(cmd);
 cmd = NULL;
