@@ -48,7 +48,10 @@ char **tokenization(char *cmd)
 
     
     if (cmd == NULL)
+    {
+        free(cmd);
         return (NULL);
+    }
     
     cmdcpy = _strdup(cmd);
     token = strtok(cmd, delim);
